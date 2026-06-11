@@ -25,9 +25,11 @@ const ChatDashboard = () => {
     setIsLoading(true);
 
     try {
-      // The placeholder will be replaced by sed during Docker container startup
-      const placeholder = '__VITE_API_URL_PLACEHOLDER__';
-      const apiUrl = placeholder === '__VITE_API_URL_PLACEHOLDER__' ? 'http://localhost:8000' : placeholder;
+      // The injected URL is set via index.html at Docker container startup
+      const injectedUrl = window.RUNTIME_API_URL;
+      const apiUrl = injectedUrl && injectedUrl !== 'INJECT_API_URL_HERE' 
+        ? injectedUrl 
+        : 'http://localhost:8000';
       const response = await fetch(`${apiUrl}/predict`, {
         method: 'POST',
         headers: {
