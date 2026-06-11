@@ -25,7 +25,9 @@ const ChatDashboard = () => {
     setIsLoading(true);
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      // The placeholder will be replaced by sed during Docker container startup
+      const placeholder = '__VITE_API_URL_PLACEHOLDER__';
+      const apiUrl = placeholder === '__VITE_API_URL_PLACEHOLDER__' ? 'http://localhost:8000' : placeholder;
       const response = await fetch(`${apiUrl}/predict`, {
         method: 'POST',
         headers: {
